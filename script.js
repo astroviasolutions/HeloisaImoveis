@@ -148,8 +148,8 @@ function setupFicha() {
 function setupVideo() {
   const vi = $("#vIntro"), vl = $("#vLoop");
   const s = matchMedia("(orientation: portrait)").matches ? "-m" : "";
-  vi.src = `assets/sacada-intro${s}.mp4`;
-  vl.src = `assets/sacada-loop${s}.mp4`;
+  vi.src = `assets/previa/sacada-intro${s}.mp4`;
+  vl.src = `assets/previa/sacada-loop${s}.mp4`;
   if (reduceMotion) {            // sem movimento: mostra direto o final (piscina), parado
     vi.classList.remove("is-on"); vl.classList.add("is-on"); vl.removeAttribute("loop");
     return;
