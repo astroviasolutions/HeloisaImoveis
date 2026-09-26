@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- ✏️ TÍTULO DA ABA E DESCRIÇÃO (aparece no Google / WhatsApp ao compartilhar o link) -->
+  <title>Heloisa · Imóveis de Alto Padrão</title>
+  <meta name="description" content="Cartão digital — corretora de imóveis de alto padrão em Jurerê Internacional." />
+  <meta name="theme-color" content="#050505" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Créditos (Licença Pexels — uso comercial livre, crédito opcional):
+       • Vídeo casa → piscina: 3 clipes de Alef Morais, Salvador/BA (Pexels 39576518, 38675643, 38413585)
+       • Mármore das portas: Pexels 36327398 (veios tingidos de dourado) -->
+
+  <!-- ============================================================
+       FUNDO — vídeo: parte 1 toca uma vez (sala → piscina), parte 2 em loop.
+       ✏️ Para trocar: substitua os arquivos em assets/ mantendo os nomes.
+          "-m" = versão vertical (celular em pé).
+       ============================================================ -->
+  <div class="bg" aria-hidden="true">
+    <video class="bg__video is-on" id="vIntro" muted playsinline preload="auto"></video>
+    <video class="bg__video" id="vLoop" muted playsinline loop preload="auto"></video>
+    <div class="bg__veil"></div>
+  </div>
+
+  <!-- ============================================================
+       CARTÃO
+       ============================================================ -->
+  <main class="card" id="card">
+    <header class="profile">
+      <!-- ✏️ NOME / ESPECIALIDADE / REGIÃO -->
+      <h1 class="profile__name">Heloisa Silveira</h1>
+      <p class="profile__role">Corretora de Imóveis de Alto Padrão</p>
+      <p class="profile__place">Jurerê Internacional · Florianópolis</p>
+    </header>
+
+    <div class="bottom">
+      <!-- Depoimentos: passam sozinhos, sem clique.
+           ✏️ Troque pelos depoimentos REAIS (com autorização). Para mais, copie um <figure>. -->
+      <div class="quotes" aria-label="Depoimentos">
+        <figure class="quote"><blockquote>“Espaço para o depoimento real de um cliente.”</blockquote><figcaption>Nome do cliente</figcaption></figure>
+        <figure class="quote"><blockquote>“Segundo depoimento — frases curtas funcionam melhor.”</blockquote><figcaption>Nome do cliente</figcaption></figure>
+        <figure class="quote"><blockquote>“Terceiro depoimento de exemplo.”</blockquote><figcaption>Nome do cliente</figcaption></figure>
+      </div>
+
+      <!-- ✏️ Os LINKS ficam no topo do script.js (objeto CONFIG) -->
+      <nav class="actions" aria-label="Contato">
+        <a class="btn btn--primary" data-link="whatsapp" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.1L4 20z"/><path d="M9 9.5c.3 1.8 2.7 4.3 4.6 4.6l1.2-1.1 1.7.8-.4 1.4c-3.4.6-7.5-3.5-6.9-6.9l1.4-.4.8 1.7L9 9.5z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <a class="btn" data-link="instagram" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+          Ver imóveis no Instagram
+        </a>
+      </nav>
+
+      <!-- Ficha de análise: 3 toques (sem digitar) e o resumo do que a pessoa procura
+           já chega pronto no WhatsApp da Heloisa. ✏️ Perguntas/opções em CONFIG.ficha. -->
+      <button class="ficha-cta" id="openFicha" type="button">
+        <span class="ficha-cta__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 4.5h6a1 1 0 0 1 1 1V6h1.5A1.5 1.5 0 0 1 19 7.5v12A1.5 1.5 0 0 1 17.5 21h-11A1.5 1.5 0 0 1 5 19.5v-12A1.5 1.5 0 0 1 6.5 6H8v-.5a1 1 0 0 1 1-1Z"/><path d="M9 11h6M9 15h4"/></svg>
+        </span>
+        <span class="ficha-cta__text">
+          <strong>Encontre o imóvel ideal</strong>
+          <em>3 toques e eu já recebo seu perfil de busca</em>
+        </span>
+        <svg class="ficha-cta__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+
+      <div class="mini">
+        <button class="mini__btn" id="saveContact" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+          Salvar contato
+        </button>
+        <button class="mini__btn mini__btn--qr" id="openQr" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/></svg>
+          QR code
+        </button>
+      </div>
+
+      <!-- ✏️ CRECI -->
+      <p class="footer">CRECI/SC 45606</p>
+    </div>
+
+    <!-- QR code fixo no desktop (canto inferior direito) -->
+    <aside class="qr-dock" aria-label="QR code do cartão">
+      <div class="qr" data-qr></div>
+      <span>Aponte a câmera</span>
+    </aside>
+  </main>
+
+  <!-- QR code em tela cheia (celular: para outra pessoa escanear) -->
+  <div class="qr-sheet" id="qrSheet" hidden>
+    <div class="qr-sheet__box">
+      <div class="qr qr--big" data-qr></div>
+      <p>Escaneie para abrir o cartão da Heloisa</p>
+      <button class="qr-sheet__close" id="closeQr" type="button">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Ficha de análise: perguntas em cartões, uma por vez, resposta em 1 toque.
+       Ao final, abre o WhatsApp com o resumo já escrito — nenhuma digitação. -->
+  <div class="ficha-sheet" id="fichaSheet" hidden>
+    <div class="ficha-sheet__box">
+      <button class="ficha-sheet__close" id="closeFicha" type="button" aria-label="Fechar">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <p class="ficha-sheet__eyebrow">Perfil de busca</p>
+      <div class="ficha-sheet__stage" id="fichaStage"></div>
+      <div class="ficha-sheet__dots" id="fichaDots"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ABERTURA — portas de mármore que se abrem sozinhas
+       ============================================================ -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="door door--left"><span class="door__stone"></span><span class="door__handle"></span></div>
+    <div class="door door--right"><span class="door__stone"></span><span class="door__handle"></span></div>
+    <span class="seam"></span>
+    <!-- ✏️ FRASE DE ABERTURA -->
+    <p class="intro__title">Inicie a busca <em>pelos seus sonhos</em></p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

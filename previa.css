@@ -1,0 +1,220 @@
+/* =================================================================
+   PRÉVIA — Sacada (foto + água animada) e Sala de depoimentos (TV)
+   Complementa style.css.
+   ================================================================= */
+
+/* ---------- SACADA ---------- */
+.scene { background: #000; }   /* sem o pôster do vídeo antigo */
+.scene:has(.balcony[data-variant="video"]) .birds,
+.scene:has(.balcony[data-variant="video"]) .scene__grade { display: none; }
+.balcony { position: absolute; inset: 0; overflow: hidden; }
+
+/* Moldura com a MESMA proporção da foto (3:2), cobrindo a tela.
+   Assim o recorte do mar (clip-path em %) bate sempre com a foto. */
+.balcony__frame {
+  --ratio: 1.5;                     /* largura / altura da foto */
+  --fx: 50%;                        /* ✏️ foco horizontal (0% esquerda → 100% direita) */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100vw, calc(100vh * var(--ratio)));
+  height: max(100vh, calc(100vw / var(--ratio)));
+  translate: calc(-1 * var(--fx)) -50%;
+  will-change: transform;
+}
+.balcony__img,
+.balcony__water {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.82) contrast(1.06) saturate(.92);
+}
+
+/* Água: só a área do mar, com o filtro de ondulação */
+.balcony__water {
+  filter: url(#agua) brightness(.82) contrast(1.06) saturate(.92);
+  /* Polígono do mar na Sacada A (em % da foto) */
+  clip-path: polygon(29% 50.6%, 100% 50.6%, 100% 93%, 82% 85%, 70% 77.5%, 55% 69%, 43% 57%, 33% 53%);
+}
+.balcony[data-variant="b"] .balcony__water { display: none; }
+
+/* Vídeo da sacada (opção C) */
+.balcony__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+}
+.balcony[data-variant="video"] .balcony__frame { visibility: hidden; }
+.balcony[data-variant="video"] .balcony__video.is-on { opacity: 1; }
+
+@media (max-width: 760px) {
+  .balcony[data-variant="a"] .balcony__frame { --fx: 56%; }
+}
+
+/* ---------- SALA DE DEPOIMENTOS ---------- */
+.room {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  overflow: hidden;
+  background: #000;
+}
+.room[hidden] { display: none; }
+
+/* Palco com o tamanho real da foto; o JS posiciona/escala (câmera) */
+.room__stage {
+  position: absolute;
+  top: 0; left: 0;
+  width: 2500px;
+  height: 2500px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.room__img { position: absolute; inset: 0; width: 100%; height: 100%; filter: brightness(.9); }
+.room__img--dark { filter: none; opacity: 1; }
+
+/* Tela da TV — coordenadas em pixels da foto */
+.tv {
+  position: absolute;
+  left: 604px;
+  top: 869px;
+  width: 679px;
+  height: 385px;
+  overflow: hidden;
+  background: #020202;
+  opacity: 0;                       /* "desligada" até a câmera chegar */
+}
+.tv__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 26px 48px 22px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 45%, rgba(60, 44, 14, .55), transparent 70%),
+    linear-gradient(180deg, #0b0906, #030303);
+}
+.tv__brand {
+  position: absolute;
+  top: 18px;
+  left: 0; right: 0;
+  font-size: 9px;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.tv__slides { position: relative; width: 100%; height: 230px; }
+.tv__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  opacity: 0;
+}
+.tv__stars { color: var(--gold); letter-spacing: .3em; font-size: 12px; }
+.tv__slide blockquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 25px;
+  line-height: 1.25;
+  color: var(--text);
+  max-width: 540px;
+}
+.tv__slide figcaption {
+  font-size: 9.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.tv__dots { position: absolute; bottom: 18px; display: flex; gap: 8px; }
+.tv__dots span {
+  width: 18px; height: 2px;
+  background: rgba(212,175,55,.3);
+}
+.tv__dots span.is-on { background: var(--gold); }
+
+/* Linha de "ligar a TV" e reflexo do vidro da tela */
+.tv__line {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 2px;
+  background: #fff6d6;
+  box-shadow: 0 0 20px 4px rgba(255, 230, 170, .8);
+  transform: scaleX(0);
+}
+.tv__glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.07) 0%, transparent 35%, transparent 70%, rgba(255,255,255,.04) 85%, transparent);
+}
+
+.room__veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 70% at 50% 45%, transparent 40%, rgba(0,0,0,.6) 100%);
+}
+
+.room__back {
+  position: absolute;
+  left: 50%;
+  bottom: max(26px, env(safe-area-inset-bottom));
+  translate: -50% 0;
+  padding: 14px 26px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-soft);
+  background: rgba(8,7,5,.6);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  color: var(--gold-light);
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+
+/* ---------- Barra da prévia ---------- */
+.pv-bar {
+  position: fixed;
+  z-index: 40;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 6px 6px 14px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.65);
+  border: 1px solid rgba(212,175,55,.35);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.pv-bar button {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.pv-bar button.is-on { border-color: var(--gold); background: rgba(212,175,55,.15); }
+@media (max-width: 420px) {
+  .pv-bar { top: 8px; right: 8px; padding: 4px; }
+  .pv-bar__label { display: none; }
+}
